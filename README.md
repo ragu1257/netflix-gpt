@@ -8,6 +8,7 @@
 - SignUp form
 - form validation
 - useRef Hook
+- Setting up the firebase project and deploy
 
 #Features
 
