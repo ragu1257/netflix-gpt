@@ -1,6 +1,11 @@
 import { useState, useRef } from "react";
 import Header from "./Header";
 import { validateSignIn, validateSignUp } from "../utils/validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 function Login() {
   const [isSignedIn, setIsSignedIn] = useState(true);
@@ -8,16 +13,50 @@ function Login() {
   const fullName = useRef();
   const email = useRef();
   const password = useRef();
+
   const handleSubmit = () => {
     let result;
     if (isSignedIn) {
       result = validateSignIn(email.current.value, password.current.value);
+      if (result !== null) return;
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log("this is sign in user info", user);
+
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorSignIn(errorCode + " " + errorMessage);
+        });
     } else {
       result = validateSignUp(
         fullName.current.value,
         email.current.value,
         password.current.value
       );
+      if (result !== null) return;
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log("this is stored user", user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorSignIn(errorCode + " " + errorMessage);
+        });
     }
     setErrorSignIn(result);
   };
