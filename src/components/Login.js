@@ -11,6 +11,7 @@ import {
 import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { NETFLIX_BACKGROUND } from "../utils/constants";
 
 function Login() {
   const [isSignedIn, setIsSignedIn] = useState(true);
@@ -31,14 +32,7 @@ function Login() {
         email.current.value,
         password.current.value
       )
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log("this is sign in user info", user);
-          navigate("/browse");
-
-          // ...
-        })
+        .then(() => {})
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
@@ -50,8 +44,6 @@ function Login() {
         email.current.value,
         password.current.value
       );
-      console.log("this is result", result);
-
       if (result !== null) {
         setErrorSignIn(result);
         return;
@@ -63,15 +55,12 @@ function Login() {
       )
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log("user info", user);
-
           updateProfile(user, {
             displayName: fullName.current.value,
           })
             .then(() => {
               const { uid, email, displayName } = auth.currentUser;
               dispatch(addUser({ uid, email, displayName }));
-              navigate("/browse");
             })
             .catch((error) => {
               setErrorSignIn(error);
@@ -89,10 +78,7 @@ function Login() {
     <div>
       <Header />
       <div className="absolute">
-        <img
-          alt="netflix-home"
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/50fcc930-ba3f-4cae-9257-9f920e30a998/web/ES-en-20250310-TRIFECTA-perspective_3d6fec3b-833a-415d-ad70-312e72703cce_large.jpg"
-        />
+        <img alt="netflix-home" src={NETFLIX_BACKGROUND} />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}

@@ -11,6 +11,10 @@
 - Setting up the firebase project and deploy
 - Implement Sign In user API
 - Created Redux Store with userSlice
+- Fetch from TMDB Movies
+- BugFIx: if user not logged in redirect to home page
+- unSubscribe to the onAuthStateChanged call
+- Add hardcode values to the constants file
 
 #Features
 
