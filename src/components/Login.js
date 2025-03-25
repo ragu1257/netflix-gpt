@@ -1,15 +1,22 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Header from "./Header";
 import { validateSignIn, validateSignUp } from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 function Login() {
   const [isSignedIn, setIsSignedIn] = useState(true);
   const [errorSignIn, setErrorSignIn] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const fullName = useRef();
   const email = useRef();
   const password = useRef();
@@ -28,6 +35,7 @@ function Login() {
           // Signed in
           const user = userCredential.user;
           console.log("this is sign in user info", user);
+          navigate("/browse");
 
           // ...
         })
@@ -42,7 +50,12 @@ function Login() {
         email.current.value,
         password.current.value
       );
-      if (result !== null) return;
+      console.log("this is result", result);
+
+      if (result !== null) {
+        setErrorSignIn(result);
+        return;
+      }
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
@@ -50,7 +63,19 @@ function Login() {
       )
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log("this is stored user", user);
+          console.log("user info", user);
+
+          updateProfile(user, {
+            displayName: fullName.current.value,
+          })
+            .then(() => {
+              const { uid, email, displayName } = auth.currentUser;
+              dispatch(addUser({ uid, email, displayName }));
+              navigate("/browse");
+            })
+            .catch((error) => {
+              setErrorSignIn(error);
+            });
         })
         .catch((error) => {
           const errorCode = error.code;

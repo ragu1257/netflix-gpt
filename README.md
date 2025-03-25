@@ -9,6 +9,8 @@
 - form validation
 - useRef Hook
 - Setting up the firebase project and deploy
+- Implement Sign In user API
+- Created Redux Store with userSlice
 
 #Features
 
