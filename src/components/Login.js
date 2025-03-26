@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 
 import Header from "./Header";
 import { validateSignIn, validateSignUp } from "../utils/validate";
@@ -16,7 +15,6 @@ import { NETFLIX_BACKGROUND } from "../utils/constants";
 function Login() {
   const [isSignedIn, setIsSignedIn] = useState(true);
   const [errorSignIn, setErrorSignIn] = useState(null);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const fullName = useRef();
   const email = useRef();
@@ -26,7 +24,10 @@ function Login() {
     let result;
     if (isSignedIn) {
       result = validateSignIn(email.current.value, password.current.value);
-      if (result !== null) return;
+      if (result !== null) {
+        setErrorSignIn(result);
+        return;
+      }
       signInWithEmailAndPassword(
         auth,
         email.current.value,

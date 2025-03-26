@@ -15,6 +15,8 @@
 - BugFIx: if user not logged in redirect to home page
 - unSubscribe to the onAuthStateChanged call
 - Add hardcode values to the constants file
+- Build the main container
+- build the secondary container
 
 #Features
 
