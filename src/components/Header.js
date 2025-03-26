@@ -41,7 +41,7 @@ function Header() {
             alt="usericon"
             className="w-12 h-12 mx-2"
           />
-          <p className="px-3">Hello {user?.displayName}</p>
+          <p className="px-3 text-white">Hello {user?.displayName}</p>
           <button onClick={handleSignOut} className="font-bold text-white">
             {" "}
             Sign Out
