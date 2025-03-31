@@ -1,6 +1,6 @@
 function VideoTitle({ title, overview }) {
   return (
-    <div className="px-12 absolute pt-[20%] text-white bg-gradient-to-r from-black w-screen aspect-video">
+    <div className="px-12 absolute pt-[20%] text-white bg-gradient-to-r from-black w-full aspect-video">
       <h1 className="text-6xl font-bold">{title}</h1>
       <p className="w-1/4 text-lg">{overview}</p>
       <div>

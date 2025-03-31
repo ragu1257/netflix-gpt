@@ -17,8 +17,9 @@
 - Add hardcode values to the constants file
 - Build the main container
 - build the secondary container
-
-#Features
+- Build the link to gpt search
+- Integrate GPT APIs
+  #Features
 
 - Login/Sign up
   - Sign In/ Signup form
